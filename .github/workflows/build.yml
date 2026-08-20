@@ -26,13 +26,14 @@ jobs:
     - name: Install Cordova
       run: npm install -g cordova
 
-    - name: Create Cordova Project & Copy Web Assets
+    - name: Create Cordova Project & Build
       run: |
         cordova create myApp com.aradhna.app Aradhana
         cd myApp
         cordova platform add android
         cordova plugin add cordova-plugin-admob-plus
-        cordova plugin add cordova-plugin-media        rm -rf www/*
+        cordova plugin add cordova-plugin-media
+        rm -rf www/*
         if [ -d "../app/src/main/assets" ]; then
           cp -r ../app/src/main/assets/* www/
         else
