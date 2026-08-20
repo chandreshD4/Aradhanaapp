@@ -32,8 +32,13 @@ jobs:
         cd myApp
         cordova platform add android
         rm -rf www/*
-        cp -r ../../app/src/main/assets/* www/
-        if [ -f ../../app/src/main/assets/config.xml ]; then cp ../../app/src/main/assets/config.xml config.xml; fi
+        if [ -d "../app/src/main/assets" ]; then
+          cp -r ../app/src/main/assets/* www/
+        else
+          cp -r ../* www/ 2>/dev/null || true
+          rm -rf www/myApp www/.git www/.github
+        fi
+        if [ -f www/config.xml ]; then cp www/config.xml config.xml; fi
         cordova build android --verbose
 
     - name: Upload APK
