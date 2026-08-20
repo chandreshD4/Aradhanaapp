@@ -39,6 +39,7 @@ jobs:
           rm -rf www/myApp www/.git www/.github
         fi
         if [ -f www/config.xml ]; then cp www/config.xml config.xml; fi
+        if [ -f www/om-logo.jpg ]; then cp www/om-logo.jpg om-logo.jpg; fi
         cordova build android --verbose
 
     - name: Upload APK
