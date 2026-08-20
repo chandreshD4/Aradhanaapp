@@ -31,7 +31,7 @@ jobs:
         cordova create myApp com.aradhna.app Aradhana
         cd myApp
         cordova platform add android
-        cordova plugin add admob-plus-cordova
+        cordova plugin add admob-plus-cordova --variable APP_ID_ANDROID="ca-app-pub-3940256099942544~3347511713"
         cordova plugin add cordova-plugin-media
         rm -rf www/*
         if [ -d "../app/src/main/assets" ]; then
