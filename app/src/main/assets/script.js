@@ -311,4 +311,85 @@ function showAppPrivacyPolicy() {
 window.onload = function() {
     checkPremiumStatus();
 };
-;
+ 
+ //all new update
+ let clickCount = localStorage.getItem('appClickCount') || 0;
+ 
+ function handleButtonClick() {
+ clickCount++;
+ localStorage.setItem('appClickCount', clickCount);
+ 
+ if (clickCount >= 50) {
+ showInterstitialAd();
+ clickCount = 0; // Reset counter
+ localStorage.setItem('appClickCount', 0);
+ }
+ }
+ 
+ function showInterstitialAd() {
+ if (window.admob) {
+ const interstitial = new admob.InterstitialAd({
+ adUnitId: 'ca-app-pub-3940256099942544/1033173712' // Test ID
+ });
+ interstitial.load().then(() => interstitial.show());
+ }
+ }
+ 
+ // 1
+ // 1. AdMob Initialization
+ document.addEventListener('deviceready', async () => {
+ if (window.admob) {
+ await admob.start();
+ showBannerAd(); // App खुलते ही Banner Ad
+ }
+ }, false);
+ 
+ // 2. Banner Ad Show Function
+ async function showBannerAd() {
+ const banner = new admob.BannerAd({
+ adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Test Banner ID
+ position: 'bottom'
+ });
+ await banner.show();
+ }
+ 
+ // 3. 50 Click Counter for Interstitial Ad
+ let clickCount = parseInt(localStorage.getItem('appClickCount')) || 0;
+ 
+ function trackUserClick() {
+ clickCount++;
+ localStorage.setItem('appClickCount', clickCount);
+ 
+ if (clickCount >= 50) {
+ showInterstitialAd();
+ clickCount = 0;
+ localStorage.setItem('appClickCount', 0);
+ }
+ }
+ 
+ // सभी Buttons पर Click Counter अटैच करें
+ document.querySelectorAll('button, a, .card').forEach(element => {
+ element.addEventListener('click', trackUserClick);
+ });
+ 
+ // Interstitial (Full Screen) Ad
+ async function showInterstitialAd() {
+ if (window.admob) {
+ const interstitial = new admob.InterstitialAd({
+ adUnitId: 'ca-app-pub-3940256099942544/1033173712' // Test Interstitial ID
+ });
+ await interstitial.load();
+ await interstitial.show();
+ }
+ }
+ 
+ //2
+ function playAudio(audioFileName) {
+ let audioPath = './' + audioFileName;
+ let audio = new Audio(audioPath);
+ audio.play().catch(error => console.log("Audio play error:", error));
+ }
+ 
+ 
+ 
+ 

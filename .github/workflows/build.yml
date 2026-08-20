@@ -31,7 +31,8 @@ jobs:
         cordova create myApp com.aradhna.app Aradhana
         cd myApp
         cordova platform add android
-        rm -rf www/*
+        cordova plugin add cordova-plugin-admob-plus
+        cordova plugin add cordova-plugin-media        rm -rf www/*
         if [ -d "../app/src/main/assets" ]; then
           cp -r ../app/src/main/assets/* www/
         else

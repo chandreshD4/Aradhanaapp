@@ -17,4 +17,17 @@
     <preference name="Scheme" value="https" />
     <preference name="Hostname" value="localhost" />
     <preference name="AndroidInsecureFileModeEnabled" value="true" />
+    
+    <!-- Splash Screen Settings -->
+    <preference name="SplashScreen" value="screen" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="FadeSplashScreen" value="true" />
+    <preference name="FadeSplashScreenDuration" value="300" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    
+    <!-- Splash Screen Image -->
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="om-logo.jpg" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#7B0000" />
+    
 </widget>
