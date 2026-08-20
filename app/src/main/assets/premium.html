@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>आराधना प्रीमियम - Aradhana Premium</title>
+    <!-- देवनागरी फॉन्ट और फॉन्ट ऑसम आइकन्स -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+
+/* =========================================================
+   ARADHANA APP - PREMIUM PAGE DESIGN (Play Store Edition)
+   ========================================================= */
+
+/* 1. बेसिक रिसेट और मुख्य सेटिंग्स */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #ffffff;
+    color: #212121;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 2. प्रीमियम हेडर डिजाइन */
+.premium-header {
+    background: linear-gradient(135deg, #ff4e50, #f9d423);
+    color: #ffffff;
+    padding: 30px 20px 25px 20px;
+    text-align: center;
+    position: relative;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    box-shadow: 0 4px 15px rgba(249, 212, 35, 0.3);
+}
+
+.back-btn {
+    position: absolute;
+    left: 20px;
+    top: 30px;
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.back-btn:active {
+    transform: scale(0.9);
+}
+
+.crown-icon {
+    font-size: 42px;
+    color: #ffd700;
+    margin-bottom: 10px;
+    display: block;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    animation: crownGlow 2s infinite alternate;
+}
+ 
+@keyframes crownGlow {
+    0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,255,255,0.6)); }
+    100% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(255,255,255,0.9)); }
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.status-subtitle {
+    font-size: 13px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* 3. मुख्य कंटेनर */
+.premium-container {
+    padding: 20px;
+    flex: 1;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 4. प्लान्स कार्ड्स लेआउट */
+.plans-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.plan-card {
+    background: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.plan-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.plan-custom-radio {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #bdbdbd;
+    border-radius: 50%;
+    margin-left: auto;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.plan-card input[type="radio"]:checked ~ .plan-custom-radio {
+    border-color: #ff4e50;
+    background-color: #ff4e50;
+}
+
+.plan-card input[type="radio"]:checked ~ .plan-custom-radio::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.plan-card input[type="radio"]:checked {
+    border-color: #ff4e50;
+}
+
+.plan-card:has(input[type="radio"]:checked) {
+    border-color: #ff4e50;
+    background: rgba(255, 78, 80, 0.03);
+    box-shadow: 0 4px 12px rgba(255, 78, 80, 0.08);
+}
+
+.active-ad-card {
+    border-color: #6200ee;
+    background: rgba(98, 0, 238, 0.01);
+}
+.plan-card:has(input[name="aradhana_plan"][value="ads"]:checked) {
+    border-color: #6200ee;
+    background: rgba(98, 0, 238, 0.03);
+}
+.plan-card input[value="ads"]:checked ~ .plan-custom-radio {
+    border-color: #6200ee;
+    background-color: #6200ee;
+}
+
+.plan-badge {
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    background: #4caf50;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.ad-icon-box {
+    font-size: 24px;
+    color: #6200ee;
+    margin-right: 12px;
+}
+
+.plan-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.plan-duration {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+}
+
+.plan-price {
+    font-size: 15px;
+    font-weight: 500;
+    color: #424242;
+}
+
+.plan-desc {
+    font-size: 12px;
+    color: #616161;
+    margin-top: 1px;
+    line-height: 1.4;
+}
+
+/* 5. लाइव प्रोग्रेस काउंटर और बार */
+.progress-info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+    width: 90%;
+}
+
+.progress-container {
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    height: 8px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #6200ee, #8732fa);
+    width: 0%;
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.4s ease;
+}
+
+.progress-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6200ee;
+    white-space: nowrap;
+}
+
+/* 6. मुख्य एक्शन बटन */
+.continue-btn {
+    background: linear-gradient(135deg, #ff4e50, #f9d423);
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 78, 80, 0.2);
+    transition: all 0.2s;
+    margin-bottom: 15px;
+}
+
+.continue-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 5px rgba(255, 78, 80, 0.2);
+}
+
+/* 7. गूगल प्ले ट्रस्ट सील्स */
+.trust-badges-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #616161;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.trust-badge i {
+    font-size: 14px;
+    color: #4caf50;
+}
+
+.payment-note {
+    font-size: 11px;
+    color: #757575;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+/* 8. प्रीमियम बेनिफिट्स ग्रिड डिज़ाइन */
+.benefits-grid-section {
+    margin-top: 10px;
+    border-top: 1px solid #eeeeee;
+    padding-top: 25px;
+}
+
+.benefits-grid-section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.benefit-item {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: 14px;
+    padding: 15px 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.benefit-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 auto 10px auto;
+}
+
+.b-red { background: rgba(244, 67, 54, 0.1); color: #f44336; }
+.b-gold { background: rgba(255, 193, 7, 0.15); color: #ffbc00; }
+.b-orange { background: rgba(255, 98, 0, 0.1); color: #ff6200; }
+.b-pink { background: rgba(233, 30, 99, 0.1); color: #e91e63; }
+.b-purple { background: rgba(156, 39, 176, 0.1); color: #9c27b0; }
+.b-blue { background: rgba(33, 150, 243, 0.1); color: #2196f3; }
+
+.benefit-item h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 3px;
+}
+
+.benefit-item p {
+    font-size: 11px;
+    color: #757575;
+    line-height: 1.3;
+}
+
+</style>
+</head>
+<body>
+
+    <!-- प्रीमियम हेडर सेक्शन -->
+    <header class="premium-header">
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <h1 class="header-title">आराधना Premium</h1>
+        <div class="crown-icon">
+            <i class="fa-solid fa-crown"></i>
+        </div>
+        <p class="status-subtitle" id="premiumStatus">Premium Status: Free Mode</p>
+    </header>
+
+    <!-- मुख्य कंटेनर -->
+    <main class="premium-container">
+        
+        <!-- प्लान्स का सिलेक्शन एरिया -->
+        <div class="plans-selector">
+            
+            <!-- इयरली प्लान -->
+            <label class="plan-card">
+                <input type="radio" name="aradhana_plan" value="yearly">
+                <div class="plan-badge">14-day free trial</div>
+                <div class="plan-details">
+                    <span class="plan-duration">Yearly Plan</span>
+                    <span class="plan-price">₹199.00 <small>/year</small></span>
+                </div>
+                <div class="plan-custom-radio"></div>
+            </label>
+
+            <!-- मंथली प्लान -->
+            <label class="plan-card">
+                <input type="radio" name="aradhana_plan" value="monthly">
+                <div class="plan-badge">7-day free trial</div>
+                <div class="plan-details">
+                    <span class="plan-duration">Monthly Plan</span>
+                    <span class="plan-price">₹29.00 <small>/month</small></span>
+                </div>
+                <div class="plan-custom-radio"></div>
+            </label>
+
+            <!-- वन-टाइम लाइफटाइम परचेज -->
+            <label class="plan-card">
+                <input type="radio" name="aradhana_plan" value="lifetime">
+                <div class="plan-details">
+                    <span class="plan-duration">One-time Purchase</span>
+                    <span class="plan-price">₹399.00</span>
+                </div>
+                <div class="plan-custom-radio"></div>
+            </label>
+
+            <!-- डेली एक्सेस (वीडियो विज्ञापन - डिफ़ॉल्ट सेलेक्टेड) -->
+            <label class="plan-card active-ad-card">
+                <input type="radio" name="aradhana_plan" value="ads" checked>
+                <div class="ad-icon-box">
+                    <i class="fa-solid fa-circle-play"></i>
+                </div>
+                <div class="plan-details">
+                    <span class="plan-duration">Daily Free Access</span>
+                    <span class="plan-desc">Get 24 hours premium access by watching 10 video Ads</span>
+                    
+                    <!-- लाइव प्रोग्रेस काउंटर टेक्स्ट और बार -->
+                    <div class="progress-info-box">
+                        <div class="progress-container">
+                            <div class="progress-bar" id="adProgressBar"></div>
+                        </div>
+                        <span class="progress-text" id="adProgressText">0 / 10 Completed</span>
+                    </div>
+                </div>
+                <div class="plan-custom-radio"></div>
+            </label>
+
+        </div>
+
+        <!-- मुख्य एक्शन बटन -->
+        <button class="continue-btn" id="actionPremiumBtn">Continue</button>
+
+        <!-- गूगल प्ले ट्रस्ट सील / सुरक्षा बैज -->
+        <div class="trust-badges-container">
+            <div class="trust-badge">
+                <i class="fa-brands fa-google-play"></i>
+                <span>Google Play Secured</span>
+            </div>
+            <div class="trust-badge">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Cancel Anytime</span>
+            </div>
+        </div>
+
+        <p class="payment-note">
+            After a successful subscription or purchase, you can have unlimited access to all paid features of Aradhana app.
+        </p>
+
+        <!-- प्रीमियम बेनिफिट्स -->
+        <section class="benefits-grid-section">
+            <h2>Premium Benefits</h2>
+            <div class="benefits-grid">
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon b-red"><i class="fa-solid fa-ban"></i></div>
+                    <h3>Ad-Free Experience</h3>
+                    <p>संपूर्ण विज्ञापन मुक्त अनुभव</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon b-gold"><i class="fa-solid fa-book-open-reader"></i></div>
+                    <h3>All Chalisa Unlocked</h3>
+                    <p>सभी पावन चालीसा संग्रह</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon b-orange"><i class="fa-solid fa-scroll"></i></div>
+                    <h3>Ramcharitmanas</h3>
+                    <p>संपूर्ण कथा और बाल कांड गाथा</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon b-pink"><i class="fa-solid fa-heart"></i></div>
+                    <h3>Sunderkand Special</h3>
+                    <p>सुंदरकांड का विशेष दिव्य पाठ</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon b-purple"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h3>Daily Mantras</h3>
+                    <p>दैनिक महामंत्र और आरतियां</p>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon b-blue"><i class="fa-solid fa-cloud-arrow-down"></i></div>
+                    <h3>Offline Mode</h3>
+                    <p>बिना इंटरनेट पढ़ने की सुविधा</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- जावास्क्रिप्ट इंजन -->
+    <script>
+    // =========================================================
+    // ARADHANA APP - PREMIUM SYSTEM JAVASCRIPT (PRODUCTION READY)
+    // =========================================================
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        updateAdProgressUI();
+    });
+
+    // 1. UI अपडेट फंक्शन
+    function updateAdProgressUI() {
+        let watchedAds = parseInt(localStorage.getItem("aradhana_watched_ads")) || 0;
+        if (watchedAds > 10) watchedAds = 10;
+        
+        const progressBar = document.getElementById("adProgressBar");
+        const progressText = document.getElementById("adProgressText");
+        const premiumStatus = document.getElementById("premiumStatus");
+        
+        let percentage = (watchedAds / 10) * 100;
+        
+        if (progressBar) progressBar.style.width = percentage + "%";
+        if (progressText) progressText.innerText = `${watchedAds} / 10 Completed`;
+        
+        if (watchedAds >= 10 && premiumStatus) {
+            premiumStatus.innerText = "Premium Status: Daily Active";
+        }
+    }
+
+    // 2. Android Native AdMob द्वारा सफल रिवॉर्ड मिलने पर चलने वाला फंक्शन
+    window.onPremiumAdRewarded = function() {
+        let watchedAds = parseInt(localStorage.getItem("aradhana_watched_ads")) || 0;
+        
+        if (watchedAds < 10) {
+            watchedAds++;
+            localStorage.setItem("aradhana_watched_ads", watchedAds);
+            updateAdProgressUI();
+            
+            // ठीक 10/10 होने पर ऑटोमैटिक success.html पर भेजें
+            if (watchedAds >= 10) {
+                window.location.href = "success.html"; 
+            }
+        }
+    };
+
+    // 3. 'Continue' बटन एक्शन
+    document.getElementById("actionPremiumBtn").addEventListener("click", () => {
+        const selectedPlan = document.querySelector('input[name="aradhana_plan"]:checked').value;
+        
+        if (selectedPlan === "ads") {
+            let watchedAds = parseInt(localStorage.getItem("aradhana_watched_ads")) || 0;
+            
+            if (watchedAds >= 10) {
+                window.location.href = "success.html"; 
+            } else {
+                // Android Native AdMob Bridge के जरिए एड शो करना
+                if (window.AradhanaAdBridge && typeof window.AradhanaAdBridge.showRewardedAdForPremium === 'function') {
+                    window.AradhanaAdBridge.showRewardedAdForPremium();
+                } else {
+                    console.warn("AradhanaAdBridge connection pending or unavailable.");
+                }
+            }
+        } else {
+            console.log(`Plan Selected: ${selectedPlan}. Google Play Billing Flow Trigger.`);
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,675 @@
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: 'Noto Sans Devanagari', sans-serif;
+ -webkit-tap-highlight-color: transparent;
+ }
+ 
+ body {
+ background: linear-gradient(180deg, #fff8ef, #f6e8d5);
+ overflow-x: hidden;
+ padding-top: 155px; 
+ padding-bottom: 90px; 
+ color: #3e2723;
+ min-height: 100vh;
+ }
+  /* मुख्य हेडर स्टाइल */
+ .main-header {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ z-index: 99999;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 16px 14px 58px;
+ background: radial-gradient(circle at top, #b30018 0%, #6d000f 60%, #210002 100%);
+ clip-path: polygon(0% 0%, 100% 0%, 100% 72%, 90% 82%, 60% 82%, 50% 100%, 40% 82%, 10% 82%, 0% 72%);
+ box-shadow: 0 12px 28px rgba(0,0,0,0.45), inset 0 0 25px rgba(255,215,0,0.12);
+ }
+ 
+ /* ॐ बॉक्स */
+ .om-box {
+ width: 58px;
+ height: 58px;
+ border-radius: 50%;
+ background: rgba(0,0,0,0.25);
+ border: 2px solid rgba(255,215,0,0.5);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ cursor: pointer;
+ transition: transform 0.1s ease;
+ }
+ .om-box:active {
+ transform: scale(0.92);
+ }
+ 
+ .om-text {
+ font-size: 2rem;
+ font-weight: 900;
+ color: #ffd700;
+ animation: omGlow 3s infinite alternate;
+ user-select: none;
+ }
+ 
+ @keyframes omGlow {
+ from { transform: scale(1); text-shadow: 0 0 10px #ffd700; }
+ to { transform: scale(1.08); text-shadow: 0 0 15px #ffd700, 0 0 30px #ff9800; }
+ }
+ 
+ /* टाइटल एरिया */
+ .title-area {
+ flex: 1;
+ text-align: center;
+ padding: 0 8px;
+ }
+ 
+ .title-area h1 {
+ font-size: 2.5rem;
+ font-weight: 900;
+ background: linear-gradient(180deg, #fff, #ffe082, #ffd700);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+ }
+ 
+ .title-area p {
+ margin-top: 4px;
+ font-size: 0.75rem;
+ color: #fff4d2;
+ letter-spacing: 2px;
+ }
+ 
+ /* शोकेस और सुदर्शन चक्र */
+ .showcase {
+ position: relative;
+ width: 78px;
+ height: 78px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ }
+ 
+ .sudarshan {
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ object-fit: contain;
+ animation: sudarshanRotate 5s linear infinite;
+ }
+ 
+ @keyframes sudarshanRotate {
+ from { transform: rotate(0deg); }
+ to { transform: rotate(360deg); }
+ }
+ 
+ .deity-img {
+ position: absolute;
+ width: 44px;
+ height: 44px;
+ border-radius: 50%;
+ object-fit: cover;
+ opacity: 0;
+ transition: 1s;
+ box-shadow: 0 0 10px rgba(255,255,255,0.7), 0 0 18px rgba(255,215,0,0.6);
+ }
+ 
+ .deity-img.active { opacity: 1; }
+ 
+ /* घड़ी और तारीख */
+ .clock {
+ margin-top: 10px;
+ padding: 4px 18px 10px;
+ text-align: right;
+ position: relative;
+ z-index: 999;
+ }
+ 
+ #time {
+ font-size: 19px;
+ font-weight: 800;
+ color: #b71c1c;
+ text-shadow: 0 0 8px rgba(255,152,0,0.25);
+ }
+ 
+ #date {
+ font-size: 12px;
+ font-weight: 700;
+ color: #ef6c00;
+ }
+ 
+ /* सर्च कंटेनर */
+ .search-container {
+ padding: 0 15px;
+ max-height: 0;
+ overflow: hidden;
+ transition: 0.4s;
+ }
+ 
+ .search-container.show {
+ max-height: 80px;
+ padding-top: 12px;
+ padding-bottom: 12px;
+ }
+ 
+ .search-box {
+ width: 100%;
+ padding: 14px 18px;
+ border: none;
+ border-radius: 30px;
+ font-size: 1rem;
+ outline: none;
+ box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+ }
+ 
+ /* स्लाइडर */
+ .slider-wrapper {
+ margin: 0 15px;
+ overflow: hidden;
+ border-radius: 22px;
+ box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+ }
+ 
+ .slider {
+ display: flex;
+ overflow-x: auto;
+ scrollbar-width: none;
+ scroll-behavior: smooth;
+ }
+ 
+ .slider::-webkit-scrollbar { display: none; }
+ 
+ .slide {
+ min-width: 100%;
+ padding: 28px 18px;
+ text-align: center;
+ color: white;
+ cursor: pointer;
+ user-select: none;
+ }
+ 
+ .slide h2 { margin-bottom: 10px; }
+ .slide1 { background: linear-gradient(135deg, #ff9800, #ef6c00); }
+ .slide2 { background: linear-gradient(135deg, #8e24aa, #5e35b1); }
+ .slide3 { background: linear-gradient(135deg, #c62828, #ad1457); }
+ 
+ /* कैटेगरीज */
+ .categories {
+ display: flex;
+ gap: 12px;
+ overflow-x: auto;
+ padding: 18px 15px;
+ scrollbar-width: none;
+ }
+ 
+ .categories::-webkit-scrollbar {
+  display: none; }
+ 
+ .cat-btn {
+ border: none;
+ background: white;
+ padding: 11px 18px;
+ border-radius: 25px;
+ white-space: nowrap;
+ font-weight: 700;
+ cursor: pointer;
+ color: #7a0010;
+ box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+ }
+ .cat-btn:nth-child(1) { background-color: #ff4d4d; }
+  .cat-btn:nth-child(1) { color: #ffffff; }
+ .cat-btn:nth-child(2) { background-color: #add8e6; }
+   .cat-btn:nth-child(2) { color: #800000; }
+ .cat-btn:nth-child(3) { background-color: #90ee90; }
+   .cat-btn:nth-child(3) { color: #004d4d; }
+ .cat-btn:nth-child(4) { background-color: #ffb6c1; }
+   .cat-btn:nth-child(4) { color: #050080; }
+ .cat-btn:nth-child(5) { background-color: #d8bfd8; }
+   .cat-btn:nth-child(4) { color: #ff9933; }
+ 
+ /* भक्ति कार्ड्स */
+ .section-title {
+ font-size: 1.2rem;
+ margin: 0 15px 15px;
+ padding-left: 10px;
+ border-left: 5px solid #ffd700;
+ color: #7a0010;
+ font-weight: 700;
+ }
+ 
+ .cards {
+ display: flex;
+ flex-direction: column;
+ gap: 14px;
+ padding: 0 15px;
+ }
+ 
+ .card {
+ background: white;
+ padding: 16px;
+ border-radius: 22px;
+ display: flex;
+ align-items: center;
+ gap: 15px;
+ cursor: pointer;
+ box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+ transition: 0.3s;
+ }
+ 
+ .card:hover { transform: translateY(-3px); }
+ 
+ .card img {
+ width: 58px;
+ height: 58px;
+ border-radius: 50%;
+ object-fit: cover;
+ background: #fff3cd;
+ padding: 4px;
+ }
+ 
+ .card h3 {
+  font-size: 1.08rem; 
+  margin-bottom: 5px;
+   font-weight: 180px;
+   }
+ .card p {
+  font-size: 0.9rem; 
+  color: red;
+  font-weight: 90px;
+   }
+ 
+ /* प्रीमियम और विज्ञापन कस्टमाइज्ड स्टाइलिश सेक्शन */
+ .premium-section { 
+ padding: 25px 15px ;
+
+  }
+ 
+ .premium-card {
+ background: linear-gradient(135deg, #2b0004 0%, #7a0010 50%, #ff6f00 100%);
+ padding: 26px 22px;
+ border-radius: 28px;
+ color: white;
+ box-shadow: 0 15px 35px rgba(122, 0, 16, 0.4);
+ text-align: center;
+ border: 2px solid rgba(255, 215, 0, 0.3);
+ position: relative;
+ overflow: hidden;
+ }
+ 
+ .premium-card::before {
+ content: '';
+ position: absolute;
+ top: -50%;
+ left: -50%;
+ width: 200%;
+ height: 200%;
+ background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+ animation: pulseGlow 6s infinite linear;
+ pointer-events: none;
+ }
+ 
+ @keyframes pulseGlow {
+ 0% { transform: translate(0,0) scale(1); }
+ 50% { transform: translate(10px, 10px) scale(1.1); }
+ 100% { transform: translate(0,0) scale(1); }
+ }
+ 
+ .premium-card h2 { 
+ font-size: 1.75rem; 
+ margin-bottom: 12px; 
+ color: #ffd700; 
+ text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+ font-weight: 900;
+ }
+ 
+ .premium-card p { 
+ font-size: 0.95rem;
+ line-height: 1.6; 
+ margin-bottom: 18px; 
+ color: #ffebee;
+ font-weight: 500;
+ }
+ 
+ .premium-status {
+ background: rgba(0, 0, 0, 0.4);
+ padding: 12px 15px;
+ border-radius: 16px;
+ margin-bottom: 20px;
+ font-weight: 700;
+ font-size: 1rem;
+ color: #fff;
+ border: 1px solid rgba(255,255,255,0.15);
+ box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+ letter-spacing: 0.5px;
+ }
+ 
+ /* आकर्षक एनिमेटेड बटन्स */
+ .premium-watch-btn {
+ width: 100%;
+ border: none;
+ padding: 16px;
+ border-radius: 20px;
+ font-size: 1.1rem;
+ font-weight: 800;
+ cursor: pointer;
+ margin-top: 10px;
+ background: linear-gradient(90deg, #ffffff, #fff176, #ffffff);
+ background-size: 200% auto;
+ color: #7a0010;
+ box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2), inset 0 -3px 0px rgba(0,0,0,0.15);
+ transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1275);
+ animation: shineBtn 3s infinite linear;
+ display: block;
+ }
+ 
+ .premium-watch-btn:active {
+ transform: scale(0.96);
+ box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+ }
+ 
+ @keyframes shineBtn {
+ 0% { background-position: 0% center; }
+ 100% { background-position: 200% center; }
+ }
+ 
+ .premium-buy-btn {
+ width: 100%;
+ border: none;
+ padding: 15px;
+ border-radius: 20px;
+ font-size: 1rem;
+ font-weight: 800;
+ cursor: pointer;
+ margin-top: 14px;
+ background: linear-gradient(135deg, #ffd700 0%, #ff9100 100%);
+ color: #3e0006;
+ box-shadow: 0 5px 15px rgba(255, 145, 0, 0.3);
+ transition: 0.2s;
+ display: block;
+ }
+ .premium-buy-btn:active { transform: scale(0.96); }
+ 
+ .premiumbtn{
+ background: red;
+margin-left: 24%;
+margin-top: 40px;
+ color: white;
+ padding: 10px;
+ width: 150px;
+ height: 40px;
+ text-align: center;
+ justify-content: center;
+ align-items: center;
+
+ border-radius: 25px;
+ }
+ .apremium{
+ text-decoration: none;
+ }
+ /* बॉटम नेविगेशन बार */
+ .bottom-nav {
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ width: 100%;
+ height: 65px;
+ background: rgba(255,255,255,0.96);
+ backdrop-filter: blur(12px);
+ display: flex;
+ justify-content: space-around;
+ align-items: center;
+ border-top: 1px solid #eee;
+ z-index: 99999;
+ }
+ 
+ .nav-btn {
+ background: none;
+
+ border: none;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 3px;
+ cursor: pointer;
+ color: #8d6e63;
+ }
+ 
+ .nav-btn.active { color: #7a0010; }
+ .nav-btn span { font-size: 1.3rem; }
+ 
+ /* फुल पेज व्यू स्क्रीन */
+ .full-page-screen {
+ position: fixed;
+ inset: 0;
+ background: #fff8ef;
+ z-index: 2000000;
+ display: none; 
+ flex-direction: column;
+ overflow-y: auto;
+ }
+ 
+ .full-page-header {
+ background: linear-gradient(135deg, #b30018, #6d000f);
+ color: white;
+ padding: 18px 16px;
+ display: flex;
+ align-items: center;
+ gap: 15px;
+ position: sticky;
+ top: 0;
+ z-index: 10;
+ box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+ }
+ 
+ .back-button-arrow{
+ background: rgba(255, 255, 255, 0.2);
+ border: none;
+ color: white;
+ font-size: 1.4rem;
+ width: 42px;
+ height: 42px;
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ cursor: pointer;
+ font-weight: bold;
+ } .back-button-arrow svg{fill: white;}
+ 
+ .full-page-title { font-size: 1.3rem; font-weight: 700; }
+ 
+ .full-page-body-content {
+ padding: 24px 20px;
+ color: #3e2723;
+ font-size: 1.15rem;
+ line-height: 1.8;
+ text-align: center;
+  }
+  .bodypage{
+  position: absolute;
+ height: 100%;
+ width: 100%;
+ background-color: white;
+ }
+ /* मोडल / अलर्ट बॉक्स */
+ .modal {
+ position: fixed;
+ inset: 0;
+ background: rgba(0,0,0,0.6);
+ display: none;
+ align-items: center;
+ justify-content: center;
+ padding: 20px;
+ z-index: 999999;
+ }
+ 
+ .modal-box {
+ background: white;
+ width: 100%;
+ max-width: 350px;
+ padding: 26px 20px;
+ border-radius: 24px;
+ text-align: center;
+ box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+ animation: modalShow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+ }
+ 
+ @keyframes modalShow {
+ from { transform: scale(0.8); opacity: 0; }
+ to { transform: scale(1); opacity: 1; }
+ }
+ 
+ .modal-box h2 { color: #7a0010; margin-bottom: 12px; font-weight: 900; }
+ .modal-box p { line-height: 1.7; margin-bottom: 20px; font-size: 1rem; color: #5d4037; }
+ .modal-box button {
+ border: none;
+ padding: 14px 28px;
+ border-radius: 30px;
+ background: linear-gradient(135deg, #7a0010, #b71c1c);
+ color: white;
+ font-weight: 700;
+ cursor: pointer;
+ width: 100%;
+ box-shadow: 0 4px 15px rgba(183, 28, 28, 0.4);
+ }
+ 
+ /* साइडबार मेनू */
+ .custom-sidebar {
+ height: 100%;
+ width: 0;
+ position: fixed;
+ z-index: 9999999;
+ top: 0;
+ left: 0;
+ background-color: #fff8ef;
+ overflow-x: hidden;
+ transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+ box-shadow: 5px 0 25px rgba(0,0,0,0.4);
+ display: flex;
+ flex-direction: column;
+ }
+ 
+ .sidebar-top-branding {
+ background: linear-gradient(135deg, #6d000f, #210002);
+ padding: 30px 20px;
+ color: white;
+ text-align: center;
+ border-bottom: 4px solid #ffd700;
+ position: relative;
+ }
+ 
+ .sidebar-top-branding h2 {
+ font-size: 1.8rem;
+ font-weight: 900;
+ color: #ffd700;
+ text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+ margin-bottom: 5px;
+ }
+ 
+ .sidebar-top-branding p {
+ font-size: 0.8rem;
+ color: #fff4d2;
+ letter-spacing: 1px;
+ }
+   /* बटन को साफ़ करें */
+   .close-sidebar {
+   background: transparent;
+   border: none;
+   padding: 0;
+   cursor: pointer;
+   position: absolute;
+   top: 25px;
+   right: 15px;
+   }
+   
+   /* SVG से हरा बैकग्राउंड हटाएँ */
+   .close-sidebar svg {
+   display: block;
+   fill: white;
+   width: 24px;
+   height: 24px;
+   }
+   
+ .sidebar-menu-items {
+ padding: 15px 0;
+ flex: 1;
+ }
+ 
+ .sidebar-item {
+ display: flex;
+ align-items: center;
+ gap: 15px;
+ padding: 16px 24px;
+ text-decoration: none;
+ color: #3e2723;
+ font-size: 1.1rem;
+ font-weight: 700;
+ border-bottom: 1px solid rgba(109, 0, 15, 0.06);
+ transition: 0.3s;
+ cursor: pointer;
+ }
+ 
+ .sidebar-item:hover {
+ background-color: #f6e8d5;
+ color: #b30018;
+ padding-left: 30px;
+ }
+ 
+ .sidebar-item-icon { font-size: 1.3rem; }
+ 
+ .sidebar-footer {
+ padding: 20px;
+ text-align: center;
+ font-size: 0.85rem;
+ color: red;
+ background: #f6e8d5;
+ font-weight: 800;
+ border-top: 1px solid #e0d0bc;
+ }
+  .sidebar-footer i {
+  color: #000000;
+   font-size: 0.70rem;
+right: 20px;
+border-bottom: solid red 1px;
+position: absolute;
+  }
+ .sidebar-overlay {
+ position: fixed;
+ inset: 0;
+ background: rgba(0,0,0,0.5);
+ backdrop-filter: blur(3px);
+ z-index: 9999998;
+ display: none;
+ }
+ 
+ @media(max-width:480px){
+ .title-area h1 { font-size: 2rem; }
+ .title-area p { font-size: 0.65rem; }
+ .showcase { width: 70px; height: 70px; }
+ }
+
+ }
+: 70px; }
+ }
+m;
+right: 20px;
+border-bottom: solid red 1px;
+position: absolute;
+  }
+ .sidebar-overlay {
+ position: fixed;
+ inset: 0;
+ background: rgba(0,0,0,0.5);
+ backdrop-filter: blur(3px);
+ z-index: 9999998;
+ display: none;
+ }
+ 
+ @media(max-width:480px){
+ .title-area h1 { font-size: 2rem; }
+ .title-area p { font-size: 0.65rem; }
+ .showcase { width: 70px; height: 70px; }
+ }

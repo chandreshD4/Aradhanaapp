@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>आराधना - संपूर्ण भक्ति संग्रह</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght=400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href ="style.css">
+    
+
+    </head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeCustomSidebar()"></div>
+    <div class="custom-sidebar" id="customSidebar">
+        <div class="sidebar-top-branding">
+         <button class="close-sidebar" onclick="closeCustomSidebar()">
+                <svg width="24" height="24"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z"/></svg>            
+           
+            </button>
+
+            <h2>आराधना</h2>
+            <p>।। संपूर्ण भक्ति संग्रह ।।</p>
+        </div>
+        <div class="sidebar-menu-items">
+            <div class="sidebar-item" onclick="closeCustomSidebar()">
+                <span class="sidebar-item-icon">🏠</span> <span>Home</span>
+            </div>
+            <a href="https://indusapp.store/w1orivmm" class="sidebar-item" onclick="closeCustomSidebar()">
+                <span class="sidebar-item-icon">📤</span> <span>Share app</span>
+            </a>
+            <a href="go:rate" class="sidebar-item" onclick="closeCustomSidebar()">
+                <span class="sidebar-item-icon">⭐</span> <span>Rate us</span>
+            </a>
+            <div class="sidebar-item" onclick="showAppPrivacyPolicy()">
+                <span class="sidebar-item-icon">📜</span> <span>Privacy-Policy</span>
+            </div>
+
+          <a href="./premium.html" class="apremium">
+            <div class="premiumbtn">Premium </div>
+        </a>
+        </div>
+        
+        <div class="sidebar-footer">
+          <h3><b>ARADHANA</b> <i>V 1.0</i></h3>
+        </div>
+    </div>
+    
+    <header class="main-header">
+        <div class="om-box" onclick="openCustomSidebar()">
+            <div class="om-text">ॐ</div>
+        </div>
+        
+        <div class="title-area">
+            <h1>आराधना</h1>
+            <p>।। संपूर्ण भक्ति संग्रह ।।</p>
+        </div>
+        
+        <div class="showcase">
+            <img src="./Sudarshan.png" class="sudarshan" alt="Chakra">
+            <img src="./shri_ram.png" class="deity-img active" alt="Ram">
+            <img src="./Hanuman_Ji.png" class="deity-img" alt="Hanuman">
+            <img src="./Sitaram.png" class="deity-img" alt="Sitaram">
+        </div>
+    </header>
+    
+    <div class="clock">
+        <div id="time">00:00:00</div>
+        <div id="date">तारीख लोड हो रही है...</div>
+    </div>
+    
+    <div class="search-container" id="searchContainer">
+        <input type="text" class="search-box" id="searchInput" placeholder="🔍 चालीसा, कांड, मंत्र खोजें...">
+    </div>
+    
+    <div class="slider-wrapper">
+        <div class="slider" id="slider">
+            <div class="slide slide1">
+                <h2>।। जय श्री राम ।।</h2>
+                <p>राम नाम का स्मरण जीवन में परम शांति और आनंद देता है।</p>
+            </div>
+            <div class="slide slide2">
+                <h2>🚩 सुंदरकांड</h2>
+                <p>हनुमान जी की अतुलित बल, बुद्धि और भक्ति का पावन वर्णन।</p>
+            </div>
+            <div class="slide slide3">
+                <h2>📖 रामचरितमानस</h2>
+                <p>गोस्वामी तुलसीदास जी महाराज द्वारा रचित महाकाव्य।</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="categories">
+      <a href="./content.html" >  <button class="cat-btn">🚩 चालीसा</button> </a>
+        <button class="cat-btn">🪔 आरती</button>
+        <button class="cat-btn">📿 मंत्र</button>
+        <button class="cat-btn">📖 रामायण</button>
+        <button class="cat-btn">🙏 भक्ति</button>
+    </div>
+    
+    <div class="section-title">🌺 मुख्य भक्ति संग्रह</div>
+    
+    <div class="cards" id="cards">
+        <div class="card">
+            <img src="shri_ram.png" alt="Tulsidas">
+            <div>
+
+                <h3>तुलसीदास परिचय</h3>
+                <p>गोस्वामी तुलसीदास जी का पावन एवं अद्भुत जीवन परिचय।</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="./Sitaram.png" alt="Balkand">
+            <div>
+                <h3>बाल कांड</h3>
+                <p>भगवान श्री राम के बाल्य काल एवं लीलाओं का अनुपम वर्णन।</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="./Hanuman_Ji.png" alt="Sundarkand">
+            <div>
+                <h3>सुन्दरकांड</h3>
+                <p>संकटमोचन श्री हनुमान जी की शक्ति, युक्ति और भक्ति का महासंग्रह।</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="./Hanuman_Ji.png" alt="Hanuman Chalisa">
+            <div>
+                <h3>श्री हनुमान चालीसा</h3>
+                <p>जय हनुमान ज्ञान गुन सागर, जय कपीस तिहुं लोक उजागर।</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="./shri_ram.png" alt="Aarti">
+            <div>
+                <h3>आरती संग्रह</h3>
+                <p>प्रभु श्री रामचंद्र जी एवं वीर हनुमान जी की पावन आरतियां।</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="./Sitaram.png" alt="Mantra">
+            <div>
+                <h3>दिव्य महामंत्र</h3>
+                <p>भय और कष्टों का नाश करने वाले अचूक राम-हनुमान मंत्र।</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="premium-section">
+        <div class="premium-card">
+            <h2>👑 Aradhana Premium</h2>
+            <p>
+                Watch a video ad to experience the complete app Ad-Free!
+                <br><br>
+                Or completely remove ads for ₹299 / Month.
+            </p>
+            
+            <div class="premium-status" id="premiumStatus">Premium Status: Free Mode</div>
+            
+            <a href="./premium.html" style="text-decoration: none; display: block; width: 100%; margin: 15px 0 10px 0;">
+                <button class="premium-watch-btn" id="watchAdsBtn" style="width: 100%; cursor: pointer; padding: 15px; font-weight: bold; border-radius: 10px;">📺 Watch Ad to Unlock Premium</button>
+            </a>
+            
+            <button class="premium-buy-btn" id="buyPremiumBtn" onclick="openModal('Premium Purchase', 'Monthly Subscription system will be available soon.')">👑 Buy Premium ₹299 / Month</button>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <button class="nav-btn active" id="homeBtn"><span>🏠</span><small>Home</small></button>
+        <button class="nav-btn" id="searchBtn"><span>🔍</span><small>Search</small></button>
+        <button class="nav-btn" id="favBtn"><span>❤️</span><small>Favourite</small></button>
+        <button class="nav-btn" id="settingBtn"><span>⚙️</span><small>Settings</small></button>
+    </div>
+    
+    <div class="full-page-screen" id="fullPageScreen">
+        <div class="full-page-header">
+            <button class="back-button-arrow" onclick="closeFullPage()">
+              <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m9.474 5.209s-4.501 4.505-6.254 6.259c-.147.146-.22.338-.22.53s.073.384.22.53c1.752 1.754 6.252 6.257 6.252 6.257.145.145.336.217.527.217.191-.001.383-.074.53-.221.293-.293.294-.766.004-1.057l-4.976-4.976h14.692c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-14.692l4.978-4.979c.289-.289.287-.761-.006-1.054-.147-.147-.339-.221-.53-.221-.191-.001-.38.071-.525.215z" fill-rule="nonzero"/></svg>
+            </button>
+            <div class="full-page-title" id="fullPageTitle">शीर्षक</div>
+        </div>
+        <div class="full-page-body-content" id="fullPageContent"></div>
+    <div class="bodypage"></div>
+    </div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-box">
+            <h2 id="modalTitle">जय श्री राम</h2>
+            <p id="modalText">विवरण</p>
+            <button onclick="closeModal()">जय श्री सीताराम 🙏</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>="script.js"></script>
+</body>
+</html>�ाम 🙏</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

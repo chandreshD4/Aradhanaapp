@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Font Awesome CDN for Perfect Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <title>विवरण - आराधना</title>
+    
+    <!-- html2pdf Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ==========================================
+   1. जनरल & लेआउट स्टाइल (General Base Styles)
+   ========================================== */
+body { 
+    margin: 0; 
+    padding: 0; 
+}
+
+/* ==========================================
+   पेज का टेक्स्ट सिलेक्शन पूरी तरह बंद करने के लिए
+   ========================================== */
+body, 
+.full-page-body-content, 
+.sanskrit-text, 
+p, 
+h5 {
+    -webkit-user-select: none; /* Safari/Chrome Android */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+    user-select: none;         /* Standard Syntax */
+    -webkit-touch-callout: none; /* iOS/Android पर लॉन्ग-प्रेस (Long Press) मेन्यू रोकेगा */
+}
+
+.detail-page {
+    background-color: #fff8ef;
+    background-image: url('bg-image.png'); /* डिफ़ॉल्ट इमेज का नाम या पाथ */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* स्क्रॉल करते समय बैकग्राउंड फिक्स रहेगा */
+    color: #3e2723;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    padding-top: 75px; /* फिक्स्ड हेडर के नीचे कंटेंट को सही जगह देने के लिए */
+}
+
+.content-container {
+    display: block;
+    width: 100%;
+}
+
+/* ==========================================
+   2. हेडर स्टाइल (Fixed Header Section)
+   ========================================== */
+.full-page-header {
+    background: linear-gradient(135deg, #b30018, #6d000f);
+    color: white;
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: fixed; /* स्क्रॉल करने पर भी हेडर ऊपर फिक्स रहेगा */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.back-button-arrow {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.back-button-arrow svg {
+    fill: white;
+    width: 24px;
+    height: 24px;
+}
+
+.full-page-title {
+    margin-left: 15px;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.menu-btn {
+    right: 10px; 
+    top: 20px;
+    position: absolute;
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white; 
+}
+
+.menu-btn svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+}
+
+/* ==========================================
+   3. कंटेंट और टेक्स्ट स्टाइल (Content & Typography)
+   ========================================== */
+.full-page-body-content {
+    padding: 4px 9px;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* 🌺 इमोजी वाला मुख्य शीर्षक (यह ज़ूम नहीं होगा) */
+.full-page-body-content h5.main-title {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: 10px;    
+    color: red;
+}
+
+/* ॥ दोहा ॥ और ॥ चौपाई ॥ वाले शीर्षक (ये अब ज़ूम इन/आउट होंगे) */
+.full-page-body-content h5.zoomable-heading {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #b30018;
+}
+
+/* संस्कृत श्लोक, चौपाई और हिंदी टेक्स्ट (ये सब ज़ूम इन/आउट होंगे) */
+.full-page-body-content .sanskrit-text,
+.full-page-body-content .hindi-text,
+.full-page-body-content p { 
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 1.3rem; /* ओरिजिनल साइज */
+    color: #b30018; /* रेड कलर सेटिंग्स */
+    font-weight: 500;
+    font-style: normal !important;
+    margin-bottom: 12px;
+}
+
+/* ==========================================
+   4. फ्लोटिंग एक्शन बटन्स (Floating Buttons)
+   ========================================== */
+
+/* कॉपी बटन */
+.copy-page-btn {
+    top: 80px; 
+    right: 15px;
+    position: fixed;
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    background: white; 
+    border: 2px solid red;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.copy-page-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: red; 
+}
+
+/* स्पीकर (ऑडियो) बटन */
+.speak-btn {
+    top: 135px; 
+    right: 15px;
+    position: fixed;
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid red;
+    border-radius: 50%;      
+    width: 40px;
+    height: 40px;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.speak-btn:hover {
+    background: #f0f0f0;
+}
+
+.speak-btn .pause-icon {
+    display: none;
+}
+
+.speak-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: red; 
+    stroke: red;
+}
+
+/* रिफ्रेश / रीलोड बटन */
+.reload-btn {
+    top: 190px; 
+    right: 15px;
+    position: fixed;
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid red;
+    border-radius: 50%;      
+    width: 40px;
+    height: 40px;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.reload-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: red; 
+}
+
+/* कलर / थीम बटन wrapper */
+.color-picker-wrapper {
+    top: 245px; 
+    right: 15px;
+    position: fixed;
+    display: none; 
+    z-index: 1001;
+}
+
+.color-btn {
+    background: white;
+    border: 2px solid red;
+    border-radius: 50%;      
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.color-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: red; 
+}
+
+/* पीडीएफ डाउनलोड बटन */
+.download-btn {
+    top: 300px; 
+    right: 15px;
+    position: fixed;
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 2px solid red;
+    border-radius: 50%;      
+    width: 40px;
+    height: 40px;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.download-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: red; 
+}
+
+/* ज़ूम बटन्स (Bottom Right) */
+.zoom-btn-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none; 
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.zoom-btn {
+    background: white;
+    border: 3px solid red;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.zoom-btn svg {
+    fill: red;
+    width: 24px;
+    height: 24px;
+}
+
+/* ==========================================
+   5. थीम मोडल (Pop-up Styling)
+   ========================================== */
+.theme-modal {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 280px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.theme-modal-content h4 {
+    margin: 0 0 15px 0;
+    color: #b30018;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.color-option-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.color-option-row input[type="color"] {
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+}
+
+.upload-img-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-weight: 500;
+}
+
+.upload-img-btn:hover {
+    background: #e0e0e0;
+}
+
+.theme-modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.theme-btn {
+    flex: 1;
+    padding: 8px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.reset-theme-btn { 
+    background: #e0e0e0; 
+    color: #333; 
+}
+
+.close-theme-btn { 
+    background: #b30018; 
+    color: white; 
+}
+/* टेक्स्ट कस्टमाइजेशन और PDF क्लीन-अप के लिए */
+.full-page-body-content p, 
+.full-page-body-content .zoomable-heading,
+.full-page-body-content .sanskrit-text {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+/* फ्लोटिंग बटन्स को PDF में गोल खाली धब्बों के रूप में आने से रोकने के लिए */
+@media print {
+    .copy-page-btn, 
+    .speak-btn, 
+    .reload-btn, 
+    .color-picker-wrapper, 
+    .download-btn, 
+    .zoom-btn-container {
+        display: none !important;
+    }
+}
+
+
+
+.back-button-arrow {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white !important;
+    font-size: 1.2rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.back-button-arrow i {
+    color: white !important;
+    font-size: 1.2rem;
+}
+/* ऐप स्क्रीन पर PDF वाला ब्रांडिंग फ़ुटर छिपाने के लिए */
+.pdf-branding-footer {
+    display: none !important;
+}
+
+
+</style>
+</head>
+<body class="detail-page">
+    <!-- ऑडियो फ़ाइल -->
+    <audio id="audioPlayer" src="file:///storage/emulated/0/Android/data/com.teejay.trebedit/files/TrebEdit user files/download backhand/Hanuman_chalisa.mp3"></audio>
+
+    <!-- हेडर सेक्शन -->
+    <div class="full-page-header">
+                  <a href="index.html" class="back-button-arrow" title="Back">
+                  <i class="fa-solid fa-arrow-left"></i>
+                  </a>
+                  
+                <div class="full-page-title">हनुमान चालीसा</div>
+        <div class="toggle" id="nav-sidebar">
+            <button id="menu-btn" class="menu-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- मुख्य कंटेंट एरिया -->
+    <div class="content-container">
+        <!-- फ्लोटिंग ऐक्शन बटन्स -->
+        <button class="copy-page-btn" onclick="copyPageContent()" title="Copy Content">
+            <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="m6 18h-3c-.48 0-1-.379-1-1v-14c0-.481.38-1 1-1h14c.621 0 1 .522 1 1v3h3c.621 0 1 .522 1 1v14c0 .621-.522 1-1 1h-14c-.48 0-1-.379-1-1zm1.5-10.5v13h13v-13zm9-1.5v-2.5h-13v13h2.5v-9.5c0-.481.38-1 1-1z" fill-rule="nonzero"/>
+            </svg>
+        </button>
+
+        <button class="speak-btn" onclick="toggleAudio()" title="Listen Text">
+            <svg class="speaker-icon" viewBox="0 0 24 24">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <svg class="pause-icon" viewBox="0 0 24 24" style="display:none;">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </button>
+
+        <!-- रीसेट / रीलोड बटन -->
+        <button class="reload-btn" onclick="fullAppReset()" title="Reset Everything">
+            <svg viewBox="0 0 24 24">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.58 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+        </button>
+
+        <!-- थीम चेंज बटन -->
+        <div class="color-picker-wrapper">
+            <button class="color-btn" onclick="openThemeModal()" title="Change Colors">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.54 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- पीडीएफ डाउनलोड बटन -->
+        <button class="download-btn" onclick="downloadPagePDF()" title="Download PDF">
+            <svg viewBox="0 0 24 24">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
+        </button>
+
+        <!-- थीम बदलने का पॉप-अप बॉक्स -->
+        <div id="themeModal" class="theme-modal">
+            <div class="theme-modal-content">
+                <h4>🎨 Change Colour</h4>
+                <div class="color-option-row">
+                    <label for="bgColorInput">BG-colour:</label>
+                    <input type="color" id="bgColorInput" value="#fff8ef" onchange="changeBgColor(this.value)">
+                </div>
+                <div class="color-option-row">
+                    <label for="textColorInput">Text-colour:</label>
+                    <input type="color" id="textColorInput" value="#3e2723" onchange="changeTextColor(this.value)">
+                </div>
+                <!-- बैकग्राउंड इमेज का विकल्प -->
+                <div class="color-option-row">
+                    <label for="bgImageInput">BG-image:</label>
+                    <input type="file" id="bgImageInput" accept="image/*" onchange="changeBgImage(this)" style="display:none;">
+                    <button class="upload-img-btn" onclick="document.getElementById('bgImageInput').click()">Choose file</button>
+                </div>
+                
+                <div class="theme-modal-actions">
+                    <button class="theme-btn reset-theme-btn" onclick="resetTheme()">Reset</button>
+                    <button class="theme-btn close-theme-btn" onclick="closeThemeModal()">Ok</button>
+                </div>
+            </div>
+        </div>
+<!-- रिवॉर्डेड एड पॉप-अप मोडल -->
+<div id="adModal" class="theme-modal">
+    <div class="theme-modal-content" style="text-align: center;">
+        <h4>🎁 मुफ़्त PDF डाउनलोड</h4>
+        <p style="font-size: 0.95rem; color: #555; margin-bottom: 20px;">
+            हनुमान चालीसा की उच्च गुणवत्ता वाली PDF डाउनलोड करने के लिए एक छोटा सा विज्ञापन देखें।
+        </p>
+        <div class="theme-modal-actions" style="flex-direction: column; gap: 10px;">
+            <!-- यहाँ मैंने id="watchAdBtn" डाल दिया है -->
+                        <button id="watchAdBtn" class="theme-btn close-theme-btn" onclick="watchAdAndDownload()" style="background: #28a745; width: 100%; font-size: 1rem; padding: 10px 0;">
+                        विज्ञापन लोड हो रहा है... <i class="fa-solid fa-rotate-right fa-spin"></i>
+                        </button>
+                        
+            <button class="theme-btn reset-theme-btn" onclick="closeAdModal()" style="width: 100%;">
+                रद्द करें (Cancel)
+            </button>
+        </div>
+    </div>
+</div>
+
+        <!-- मुख्य पाठ्य सामग्री (Content Body) -->
+        <div id="content-to-copy" class="full-page-body-content">
+            <!-- यह शीर्षक ज़ूम नहीं होगा -->
+            <h5 class="main-title">🌺 हनुमान चालीसा</h5>
+            <center>
+                <!-- दोहा और चौपाई हेडिंग्स अब ज़ूम होंगी -->
+                <h5 class="zoomable-heading">॥ दोहा ॥</h5>
+                <p class="sanskrit-text">
+                    श्रीगुरु चरन सरोज रज निज मनु मुकुरु सुधारि।<br>
+                    बरनउँ रघुबर बिमल जसु जो दायकु फल चारि<br>
+                    बुद्धिहीन तनु जानिके सुमिरौं पवन-कुमार।<br>
+                    बल बुद्धि बिद्या देहु मोहि हरहु कलेस बिकार
+                </p>
+<h5 class="zoomable-heading">॥ चौपाई ॥</h5>
+                <p class="sanskrit-text">
+                    जय हनुमान ज्ञान गुन सागर।<br> 
+                    जय कपीस तिहुँ लोक उजागर || 1<br><br> 
+                    राम दूत अतुलित बल धामा।<br> 
+                    अंजनि-पुत्र पवनसुत नामा || 2<br><br> 
+                    महाबीर बिक्रम बजरंगी।<br> 
+                    कुमति निवार सुमति के संगी || 3<br><br> 
+                    कंचन बरन बिराज सुबेसा।<br> 
+                    कानन कुंडल कुंचित केसा || 4<br><br> 
+                    हाथ बज्र औ ध्वजा बिराजै।<br> 
+                    काँधे मूँज जनेऊ साजै || 5<br><br> 
+                    शंकर सुवन केसरीनंदन।<br>  
+                    तेज प्रताप महा जग बंदन || 6<br><br> 
+                    बिद्यावान गुनी अति चातुर।<br> 
+                    राम काज करिबे को आतुर || 7<br><br> 
+                    प्रभु चरित्र सुनिबे को रसिया।<br> 
+                    राम लखन सीता मन बसिया || 8<br><br> 
+                    सूक्ष्म रूप धरि सियहिं दिखावा।<br> 
+                    बिकट रूप धरि लंक जरावा || 9<br><br> 
+                    भीम रूप धरि असुर सँहारे।<br> 
+                    रामचंद्र के काज सवाँरे || 10<br><br> 
+                    लाय सजीवन लखन जियाये।<br> 
+                    श्रीरघुबीर हरषि उर लाये || 11<br><br> 
+                    रघुपति कीन्ही बहुत बड़ाई।<br> 
+                    तुम मम प्रिय भरतहि सम भाई || 12<br><br> 
+                    सहस बदन तुम्हरो जस गावैं।<br> 
+                    अस कहि श्रीपति कंठ लगावैं || 13<br><br> 
+                    सनकादिक ब्रह्मादि मुनीसा।<br> 
+                    नारद सारद सहित अहीसा || 14<br><br> 
+                    जम कुबेर दिगपाल जहाँ ते।<br> 
+                    कबि कोबिद कहि सके कहाँ ते || 15<br><br> 
+                    तुम उपकार सुग्रीवहिं कीन्हा।<br> 
+                    राम मिलाय राज पद दीन्हा || 16<br><br> 
+                    तुम्हरो मंत्र बिभीषन माना।<br> 
+                    लंकेस्वर भए सब जग जाना || 17<br><br> 
+                    जुग सहस्र जोजन पर भानू।<br> 
+                    लील्यो ताहि मधुर फल जानू || 18<br><br> 
+                    प्रभु मुद्रिका मेलि मुख माहीं।<br> 
+                    जलधि लाँघि गये अचरज नाहीं || 19<br><br> 
+                    दुर्गम काज जगत के जेते।<br> 
+                    सुगम अनुग्रह तुम्हरे तेते || 20<br><br> 
+                    राम दुआरे तुम रखवारे।<br> 
+                    होत न आज्ञा बिनु पैसारे || 21<br><br> 
+                    सब सुख लहै तुम्हारी सरना।<br> 
+                    तुम रक्षक काहू को डर ना || 22<br><br> 
+                    आपन तेज सम्हारो आपै।<br> 
+                    तीनों लोक हाँक तें काँपै || 23<br><br> 
+                    भूत पिसाच निकट नहिं आवै।<br> 
+                    महाबीर जब नाम सुनावै || 24<br><br> 
+                    नासै रोग हरै सब पीरा।<br> 
+                    जपत निरंतर हनुमत बीरा || 25<br><br> 
+                    संकट तें हनुमान छुड़ावै।<br> 
+                    मन क्रम बचन ध्यान जो लावै || 26<br><br> 
+                    सब पर राम तपस्वी राजा।<br>           
+                    तिन के काज सकल तुम साजा || 27<br><br> 
+                    और मनोरथ जो कोई लावै।<br> 
+                    सोई अमित जीवन फल पावै || 28<br><br> 
+                    चारों जुग परताप तुम्हारा<br> 
+                    है परसिद्ध जगत उजियारा || 29<br><br> 
+                    साधु संत के तुम रखवारे।<br> 
+                    असुर निकंदन राम दुलारे || 30<br><br> 
+                    अष्ट सिद्धि नौ निधि के दाता।<br> 
+                    अस बर दीन जानकी माता || 31<br><br> 
+                    राम रसायन तुम्हरे पासा।<br> 
+                    सदा रहो रघुपति के दासा || 32<br><br> 
+                    तुम्हरे भजन राम को पावै।<br> 
+                    जनम जनम के दुख बिसरावै || 33<br><br> 
+                    अंत काल रघुबर पुर जाई।<br>  
+                    जहाँ जन्म हरि-भक्त कहाई || 34<br><br> 
+                    और देवता चित्त न धरई।<br>  
+                    हनुमत सेइ सर्ब सुख करई || 35<br><br> 
+                    संकट कटै मिटै सब पीरा।<br> 
+                    जो सुमिरै हनुमत बलबीरा || 36<br><br> 
+                    जै जै जै हनुमान गोसाईं।<br> 
+                    कृपा करहु गुरुदेव की नाईं || 37<br><br> 
+                    जो सत बार पाठ कर कोई।<br>       
+                    छुटहि बँदि महा सुख होई || 38<br><br> 
+                    जो यह पढ़ै हनुमान चालीसा।<br> 
+                    होय सिद्धि साखी गौरीसा || 39<br><br> 
+                    तुलसीदास सदा हरि चेरा।<br> 
+                    कीजै नाथ हृदय महँ डेरा || 40
+                </p>
+                
+                <h5 class="zoomable-heading">॥ दोहा ॥</h5>
+                <p class="sanskrit-text">
+                    पवनतनय संकट हरन मंगल मूरति रूप।<br> 
+                    राम लखन सीता सहित हृदय बसहु सुर भूप
+                </p>
+               <!-- PDF में दिखने वाला ब्रांडिंग फ़ुटर (HD Quality Ready & English Button) -->
+               <div class="pdf-branding-footer" style="margin-top: 25px; border-top: 2px dashed #b30018; padding-top: 15px; text-align: center;">
+               
+               <!-- आपकी ओरिजिनल ॐ लोगो + ऐप का नाम (<p> टैग में) -->
+               <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+               <img src="https://i.ibb.co/7x4nMvLC/aaradhana-logo.png" crossorigin="anonymous" alt="आराधना लोगो" style="height: 38px; width: auto; max-width: 38px; object-fit: contain; border: none !important; border-radius: 0 !important; box-shadow: none !important; vertical-align: middle;">
+               
+               <p style="margin: 0; color: #b30018; font-size: 1.2rem; font-weight: bold; line-height: 1.2;">
+               आराधना - संपूर्ण भक्ति संग्रह
+               </p>
+               </div>
+               
+               <p style="margin: 2px 0 12px 0; font-size: 0.9rem; color: #555;">
+               ऑडियो सुनने, आरती, चालीसा और मंत्रों के लिए हमारी ऐप खोलें
+               </p>
+               
+               <!-- ऐप डाउनलोड/ओपन करने का बटन (अंग्रेजी में) -->
+               <a href="https://play.google.com/store/apps/details?id=ram.Hanuman_Chalisha.com" target="_blank" style="background: #b30018; color: #ffffff; padding: 8px 20px; text-decoration: none; border-radius: 20px; font-weight: bold; font-size: 0.9rem; display: inline-block;">
+                Open / Download App
+               </a>
+               </div>
+               
+               
+               </center>
+        </div>
+    </div>
+
+    <!-- ज़ूम बटन्स -->
+    <div class="zoom-btn-container">
+        <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                <path d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5zm-4.5 8h4v-4h1v4h4v1h-4v4h-1v-4h-4v-1z"/>
+            </svg>
+        </button>
+        <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                <path d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5zm-4.5 8h9v1h-9v-1z"/>
+            </svg>
+        </button>
+    </div>
+
+<script>
+// ==========================================
+// 0. ग्लोबल 50-क्लिक काउंटर लॉजिक (Play Store AdMob Standard)
+// ==========================================
+document.addEventListener('click', function(e) {
+    let globalClicks = parseInt(localStorage.getItem('aradhana_global_clicks')) || 0;
+    globalClicks++;
+    localStorage.setItem('aradhana_global_clicks', globalClicks);
+    
+    if (globalClicks >= 50) {
+        if (window.AradhanaAdBridge && typeof window.AradhanaAdBridge.showGlobalRewardedAd === 'function') {
+            window.AradhanaAdBridge.showGlobalRewardedAd();
+        }
+    }
+}, true);
+
+// जब AdMob का ग्लोबल विज्ञापन पूरा देख लिया जाएगा
+window.onGlobalAdRewarded = function() {
+    localStorage.setItem('aradhana_global_clicks', 0);
+};
+
+// ==========================================
+// 1. स्वाइप जेस्चर (Swipe Down to Home)
+// ==========================================
+let touchStartY = 0;
+let touchEndY = 0;
+
+document.addEventListener('touchstart', function(e) { 
+    touchStartY = e.changedTouches[0].screenY; 
+}, { passive: true });
+
+document.addEventListener('touchend', function(e) { 
+    touchEndY = e.changedTouches[0].screenY; 
+    handleSwipeGesture(); 
+}, { passive: true });
+
+function handleSwipeGesture() {
+    if (touchEndY - touchStartY > 120 && window.scrollY <= 0) { 
+        window.location.href = 'index.html'; 
+    }
+}
+
+// ==========================================
+// 2. कॉपी कंटेंट फ़ंक्शन
+// ==========================================
+function copyPageContent() {
+    const contentDiv = document.getElementById('content-to-copy');
+    if (!contentDiv) return;
+    let text = contentDiv.innerText;
+    
+    let cleanText = text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F200}-\u{1F2FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{1F170}-\u{1F251}]/gu, '');
+    
+    navigator.clipboard.writeText(cleanText.trim()).catch(err => {
+        console.error('कॉपी करने में त्रुटि हुई: ', err);
+    });
+}
+
+// ==========================================
+// 3. ज़ूम कंट्रोल
+// ==========================================
+function zoomIn() {
+    const content = document.getElementById('content-to-copy');
+    if (!content) return;
+    const textElements = content.querySelectorAll('p, .zoomable-heading');
+    
+    textElements.forEach(el => {
+        let currentSize = parseFloat(window.getComputedStyle(el).fontSize);
+        if (currentSize < 40) {
+            el.style.fontSize = (currentSize + 2) + 'px';
+        }
+    });
+}
+
+function zoomOut() {
+    const content = document.getElementById('content-to-copy');
+    if (!content) return;
+    const textElements = content.querySelectorAll('p, .zoomable-heading');
+    
+    textElements.forEach(el => {
+        let currentSize = parseFloat(window.getComputedStyle(el).fontSize);
+        if (currentSize > 14) {
+            el.style.fontSize = (currentSize - 2) + 'px';
+        }
+    });
+}
+
+// ==========================================
+// 4. टॉगल मेन्यू (बटन्स Show / Hide)
+// ==========================================
+const menuBtn = document.getElementById('menu-btn');
+if (menuBtn) {
+    menuBtn.addEventListener('click', function() {
+        var copyBtn = document.querySelector('.copy-page-btn');
+        var zoomCon = document.querySelector('.zoom-btn-container');
+        var speakBtn = document.querySelector('.speak-btn');
+        var reloadBtn = document.querySelector('.reload-btn');
+        var themeBtn = document.querySelector('.color-picker-wrapper');
+        var downloadBtn = document.querySelector('.download-btn');
+        
+        if (copyBtn && (copyBtn.style.display === 'none' || copyBtn.style.display === '')) {
+            copyBtn.style.display = 'flex';
+            if (speakBtn) speakBtn.style.display = 'flex';
+            if (reloadBtn) reloadBtn.style.display = 'flex';
+            if (themeBtn) themeBtn.style.display = 'block';
+            if (downloadBtn) downloadBtn.style.display = 'flex';
+            if (zoomCon) zoomCon.style.display = 'flex';
+        } else if (copyBtn) {
+            copyBtn.style.display = 'none';
+            if (zoomCon) zoomCon.style.display = 'none';
+            if (speakBtn) speakBtn.style.display = 'none';
+            if (reloadBtn) reloadBtn.style.display = 'none';
+            if (themeBtn) themeBtn.style.display = 'none';
+            if (downloadBtn) downloadBtn.style.display = 'none';
+        }
+    });
+}
+
+// ==========================================
+// 5. ऑडियो प्लेयर कंट्रोल
+// ==========================================
+function toggleAudio() {
+    var audio = document.getElementById('audioPlayer');
+    var speakerIcon = document.querySelector('.speaker-icon');
+    var pauseIcon = document.querySelector('.pause-icon');
+    if (!audio) return;
+
+    if (audio.paused) {
+        audio.play();
+        if (speakerIcon) speakerIcon.style.display = 'none';
+        if (pauseIcon) pauseIcon.style.display = 'block';
+    } else {
+        audio.pause();
+        if (speakerIcon) speakerIcon.style.display = 'block';
+        if (pauseIcon) pauseIcon.style.display = 'none';
+    }
+}
+
+// ==========================================
+// 6. बाहर वाला रिसेट / रीलोड बटन (Clean Safe Reset Logic)
+// ==========================================
+function fullAppReset() {
+    // 1. लोकल स्टोरेज से सारे सेव डेटा हटाएं
+    localStorage.removeItem('aradhana_bg_color');
+    localStorage.removeItem('aradhana_text_color');
+    localStorage.removeItem('aradhana_bg_image');
+
+    // 2. बैकग्राउंड और टेक्स्ट कलर को डिफ़ॉल्ट करें
+    document.body.style.backgroundColor = '#fff8ef';
+    document.body.style.backgroundImage = "url('bg-image.png')";
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+
+    const content = document.getElementById('content-to-copy');
+    if (content) {
+        // टेक्स्ट फ़ॉन्ट साइज़ को वापस ओरिजिनल करें
+        const textElements = content.querySelectorAll('p, .zoomable-heading');
+        textElements.forEach(el => {
+            el.style.fontSize = ''; // ओरिजिनल CSS साइज़ पर रीसेट
+            el.style.setProperty('color', '#b30018', 'important');
+        });
+    }
+
+    // 3. ऑडियो चल रहा हो तो उसे रोकें
+    var audio = document.getElementById('audioPlayer');
+    if (audio && !audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+        const speakerIcon = document.querySelector('.speaker-icon');
+        const pauseIcon = document.querySelector('.pause-icon');
+        if (speakerIcon) speakerIcon.style.display = 'block';
+        if (pauseIcon) pauseIcon.style.display = 'none';
+    }
+
+    // 4. अगर कोई मोडल खुला हो तो बंद करें
+    closeThemeModal();
+    closeAdModal();
+
+    // 5. इनपुट फ़ील्ड्स को रीसेट करें
+    if (document.getElementById('bgColorInput')) document.getElementById('bgColorInput').value = "#fff8ef";
+    if (document.getElementById('textColorInput')) document.getElementById('textColorInput').value = "#b30018";
+    if (document.getElementById('bgImageInput')) document.getElementById('bgImageInput').value = "";
+}
+
+// ==========================================
+// 7. थीम पॉप-अप मोडल (Open / Close)
+// ==========================================
+function openThemeModal() {
+    const modal = document.getElementById('themeModal');
+    if (modal) modal.style.display = 'flex';
+}
+
+function closeThemeModal() {
+    const modal = document.getElementById('themeModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// ==========================================
+// 8. कलर और इमेज कस्टमाइजेशन लॉजिक (Fixes Applied)
+// ==========================================
+
+// यूज़र द्वारा बैकग्राउंड कलर बदलना
+function changeBgColor(color) {
+    document.body.style.backgroundImage = 'none'; 
+    document.body.style.backgroundColor = color;
+    localStorage.setItem('aradhana_bg_color', color);
+    localStorage.removeItem('aradhana_bg_image');
+}
+
+// यूज़र द्वारा टेक्स्ट कलर बदलना
+function changeTextColor(color) {
+    const content = document.getElementById('content-to-copy');
+    if (content) {
+        const elements = content.querySelectorAll('p, .zoomable-heading');
+        elements.forEach(el => {
+            el.style.setProperty('color', color, 'important');
+        });
+    }
+    localStorage.setItem('aradhana_text_color', color);
+}
+
+// यूज़र द्वारा बैकग्राउंड इमेज बदलना
+function changeBgImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imageDataUrl = e.target.result;
+            
+            document.body.style.backgroundImage = `url('${imageDataUrl}')`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundRepeat = 'no-repeat';
+            document.body.style.backgroundAttachment = 'fixed';
+            
+            try {
+                localStorage.setItem('aradhana_bg_image', imageDataUrl);
+                localStorage.removeItem('aradhana_bg_color');
+            } catch (err) {
+                console.log('इमेज साइज़ बड़ा होने के कारण लोकलस्टोरेज में सेव नहीं हो सकी:', err);
+            }
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// पॉप-अप के अंदर का रिसेट बटन (मूल इमेज वापस लाएगा)
+function resetTheme() {
+    localStorage.removeItem('aradhana_bg_color');
+    localStorage.removeItem('aradhana_text_color');
+    localStorage.removeItem('aradhana_bg_image');
+
+    // डिफ़ॉल्ट मूल इमेज पुनर्स्थापित करें
+    document.body.style.backgroundColor = '#fff8ef';
+    document.body.style.backgroundImage = "url('bg-image.png')";
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundAttachment = 'fixed';
+    
+    const content = document.getElementById('content-to-copy');
+    if (content) {
+        content.querySelectorAll('p, .zoomable-heading').forEach(el => {
+            el.style.setProperty('color', '#b30018', 'important');
+        });
+    }
+
+    if (document.getElementById('bgColorInput')) document.getElementById('bgColorInput').value = "#fff8ef";
+    if (document.getElementById('textColorInput')) document.getElementById('textColorInput').value = "#b30018";
+    if (document.getElementById('bgImageInput')) document.getElementById('bgImageInput').value = "";
+}
+
+// ==========================================
+// 9. रिवॉर्डेड वीडियो विज्ञापन & Ultra-HD PDF डाउनलोड लॉजिक (AdMob Native Bridge Ready)
+// ==========================================
+
+// 1. डाउनलोड बटन दबाने पर विज्ञापन पॉप-अप (Modal) खुलेगा
+function downloadPagePDF() {
+    const adModal = document.getElementById('adModal');
+    if (adModal) {
+        adModal.style.display = 'flex';
+        
+        const adButton = document.getElementById('watchAdBtn');
+        if (adButton) {
+            // लोडिंग अवस्था: TrebEdit की तरह बटन डिसेबल और रिफ्रेश आइकन
+            adButton.innerHTML = 'विज्ञापन लोड हो रहा है... <i class="fa-solid fa-rotate-right fa-spin" style="margin-left:8px;"></i>';
+            adButton.disabled = true;
+            adButton.style.opacity = "0.7";
+            adButton.style.cursor = "not-allowed";
+
+            // 2.5 सेकंड बाद बटन एक्टिव होगा
+            setTimeout(() => {
+                adButton.innerHTML = '▶️ विज्ञापन देखें और डाउनलोड करें';
+                adButton.disabled = false;
+                adButton.style.opacity = "1";
+                adButton.style.cursor = "pointer";
+            }, 2500);
+        }
+    } else {
+        startPDFGeneration();
+    }
+}
+
+// 2. मोडल बंद करने का फ़ंक्शन
+function closeAdModal() {
+    const adModal = document.getElementById('adModal');
+    if (adModal) {
+        adModal.style.display = 'none';
+    }
+}
+
+// 3. "विज्ञापन देखें और डाउनलोड करें" क्लिक करने पर
+function watchAdAndDownload() {
+    closeAdModal();
+
+    // Android Native AdMob Bridge
+    if (window.AradhanaAdBridge && typeof window.AradhanaAdBridge.showRewardedAdForPdf === 'function') {
+        window.AradhanaAdBridge.showRewardedAdForPdf();
+    } else {
+        // अगर अभी नेटिव ब्रिज उपलब्ध न हो तो सीधे PDF डाउनलोड करें (Testing Fallback)
+        startPDFGeneration();
+    }
+}
+
+// 4. Android Native AdMob द्वारा सफल रिवॉर्ड मिलने पर चलने वाला Callback
+window.onPdfRewardSuccess = function() {
+    startPDFGeneration();
+};
+
+// 5. असली Ultra-HD PDF जनरेट करने का फ़ंक्शन (Unique Filename Fix Included)
+function startPDFGeneration() {
+    const buttonsToHide = document.querySelectorAll('.copy-page-btn, .speak-btn, .reload-btn, .color-picker-wrapper, .download-btn, .zoom-btn-container');
+    buttonsToHide.forEach(btn => btn.style.setProperty('display', 'none', 'important'));
+
+    const pdfFooter = document.querySelector('.pdf-branding-footer');
+    if (pdfFooter) pdfFooter.style.setProperty('display', 'block', 'important');
+
+    const header = document.querySelector('.full-page-header');
+    let originalHeaderPos = '';
+    if (header) {
+        originalHeaderPos = header.style.position;
+        header.style.position = 'relative';
+    }
+    const originalBodyPadding = document.body.style.paddingTop;
+    document.body.style.paddingTop = '0px';
+
+    const element = document.body;
+
+    // हर बार नया और यूनिक फाइल नेम जनरेट करने के लिए टाइमस्टैम्प जोड़ा गया है
+    const uniqueFilename = 'aradhana_hanuman_chalisa_' + Date.now() + '.pdf';
+
+    const opt = {
+        margin:       [0, 0, 0, 0],
+        filename:     uniqueFilename,
+        image:        { type: 'jpeg', quality: 1.0 },
+        html2canvas:  { scale: 4, useCORS: true, allowTaint: true, scrollY: 0, scrollX: 0, letterRendering: true, dpi: 300 },
+        pagebreak:    { mode: ['avoid-all', 'css'] },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait', compress: true }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        if (header) header.style.position = originalHeaderPos;
+        document.body.style.paddingTop = originalBodyPadding;
+        if (pdfFooter) pdfFooter.style.setProperty('display', 'none', 'important');
+        buttonsToHide.forEach(btn => btn.style.display = 'flex');
+    }).catch(err => {
+        console.error('PDF error:', err);
+        if (header) header.style.position = originalHeaderPos;
+        document.body.style.paddingTop = originalBodyPadding;
+        if (pdfFooter) pdfFooter.style.setProperty('display', 'none', 'important');
+        buttonsToHide.forEach(btn => btn.style.display = 'flex');
+    });
+}
+
+// ==========================================
+// 10. पेज लोड इवेंट (Saved Preferences Restore)
+// ==========================================
+document.addEventListener('DOMContentLoaded', function() {
+    const savedBg = localStorage.getItem('aradhana_bg_color');
+    const savedText = localStorage.getItem('aradhana_text_color');
+    const savedImage = localStorage.getItem('aradhana_bg_image');
+
+    if (savedImage) {
+        document.body.style.backgroundImage = `url('${savedImage}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundAttachment = 'fixed';
+    } else if (savedBg) {
+        changeBgColor(savedBg);
+        if (document.getElementById('bgColorInput')) document.getElementById('bgColorInput').value = savedBg;
+    }
+
+    if (savedText) {
+        changeTextColor(savedText);
+        if (document.getElementById('textColorInput')) document.getElementById('textColorInput').value = savedText;
+    }
+});
+
+</script>
+</body>
+</html>

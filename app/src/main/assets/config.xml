@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.aradhna.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>आराधना</name>
+    <description>संपूर्ण भक्ति संग्रह</description>
+    <author email="support@aradhna.app">Chandresh</author>
+    <content src="index.html" />
+
+    <!-- App Icon -->
+    <icon src="om-logo.jpg" />
+
+    <!-- File navigation permissions -->
+    <allow-navigation href="https://localhost/*" />
+    <allow-navigation href="file://*/*" />
+    <allow-navigation href="*" />
+    <access origin="*" />
+
+    <preference name="Scheme" value="https" />
+    <preference name="Hostname" value="localhost" />
+    <preference name="AndroidInsecureFileModeEnabled" value="true" />
+</widget>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>प्रीमियम अनलॉक - Success</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* =========================================================
+   ARADHANA APP - SUCCESS PAGE STYLE (Pure White Gold Theme)
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.success-container {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    padding: 30px 20px;
+}
+
+/* क्राउन और ग्रीन टिक आइकॉन एनीमेशन */
+.icon-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+.success-icon-box {
+    font-size: 5rem;
+    color: #2ecc71;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.crown-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 2.2rem;
+    color: #ffd700;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+    animation: glowPulse 1.5s infinite alternate;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes glowPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+.success-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #8b0000;
+    margin-bottom: 8px;
+}
+
+.success-subtitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #4a0000;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666666;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+/* स्टेटस कार्ड */
+.status-card {
+    background-color: #fffaf0;
+    border: 1px dashed #ffd700;
+    padding: 16px 20px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.15);
+}
+
+.status-label {
+    font-weight: 700;
+    color: #555555;
+    font-size: 0.95rem;
+}
+
+.status-value {
+    font-weight: 900;
+    color: #27ae60;
+    font-size: 1.05rem;
+}
+
+/* होम जाने वाला बटन */
+.home-back-btn {
+    width: 100%;
+    border: none;
+    padding: 16px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%);
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(255, 143, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+}
+
+.home-back-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 8px rgba(255, 143, 0, 0.1);
+}
+
+</style>
+</head>
+<body>
+
+    <div class="success-container">
+        
+        <div class="icon-wrapper">
+            <div class="success-icon-box">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="crown-badge">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+        </div>
+
+        <h1 class="success-title">बधाई हो! 🎉</h1>
+        <h2 class="success-subtitle">Aradhana Premium Unlocked</h2>
+        
+        <p class="success-message">
+            आपका मुफ़्त प्रीमियम मोड सफलतापूर्वक अनलॉक कर दिया गया है। अब आप बिना किसी विज्ञापन के संपूर्ण भक्ति संग्रह का आनंद ले सकते हैं।
+        </p>
+
+        <div class="status-card">
+            <span class="status-label">प्रीमियम स्टेटस:</span>
+            <span class="status-value" id="successTimeStatus">एक्टिवेट हो रहा है...</span>
+        </div>
+
+        <button class="home-back-btn" id="backToHomeBtn">गो टू होम पेज (Home)</button>
+    </div>
+
+<script>
+// =========================================================
+// ARADHANA APP - SUCCESS PAGE ENGINE (AUTO EXPIRY SETTER)
+// =========================================================
+
+// जब यूज़र सफलता से 10 एड्स देखकर इस पेज पर आए
+function initSuccessPremium() {
+    let premiumExpiry = localStorage.getItem('aradhana_premium_expiry');
+    let monthlyPremium = localStorage.getItem('aradhana_monthly_premium') === 'true';
+
+    // अगर मंथली प्रीमियम नहीं है और एक्सपायरी भी पहले से सेट नहीं है (या खत्म हो चुकी है)
+    if (!monthlyPremium && (!premiumExpiry || new Date(premiumExpiry) <= new Date())) {
+        // अब से 3 घंटे बाद का समय सेट करें (3 Hours = 3 * 60 * 60 * 1000 ms)
+        const threeHoursLater = new Date(Date.now() + (3 * 60 * 60 * 1000)).toISOString();
+        localStorage.setItem('aradhana_premium_expiry', threeHoursLater);
+    }
+
+    updateSuccessStatus();
+}
+
+function updateSuccessStatus() {
+    const timeStatusEl = document.getElementById("successTimeStatus");
+    
+    const premiumExpiry = localStorage.getItem('aradhana_premium_expiry');
+    const monthlyPremium = localStorage.getItem('aradhana_monthly_premium') === 'true';
+
+    if (monthlyPremium) {
+        if (timeStatusEl) timeStatusEl.innerHTML = "👑 Monthly Active";
+        return;
+    }
+
+    if (premiumExpiry) {
+        const timeLeft = new Date(premiumExpiry) - new Date();
+        if (timeLeft > 0) {
+            let hours = Math.floor(timeLeft / 3600000);
+            let min = Math.floor((timeLeft % 3600000) / 60000);
+            let sec = Math.floor((timeLeft % 60000) / 1000);
+            
+            if (hours > 0) {
+                if (timeStatusEl) timeStatusEl.innerHTML = `✅ ${hours}h ${min}m Left`;
+            } else {
+                if (timeStatusEl) timeStatusEl.innerHTML = `✅ ${min}m ${sec}s Left`;
+            }
+        } else {
+            if (timeStatusEl) timeStatusEl.innerHTML = "⏳ Expired";
+        }
+    } else {
+        if (timeStatusEl) timeStatusEl.innerHTML = "✅ 3 Hours Active";
+    }
+}
+
+// "गो टू होम पेज" बटन लॉजिक
+const backBtn = document.getElementById("backToHomeBtn");
+if (backBtn) {
+    backBtn.addEventListener("click", function() {
+        window.location.href = "index.html"; 
+    });
+}
+
+// पेज लोड होते ही प्रीमियम टाइमर चालू करें
+window.onload = function() {
+    initSuccessPremium();
+    setInterval(updateSuccessStatus, 1000);
+};
+
+</script>
+</body>
+</html>
